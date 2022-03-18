@@ -1,3 +1,7 @@
+from player import Player
+import random
+
+
 class single:
     card = -1
 
@@ -13,6 +17,8 @@ class trible:
 class sister:
     cards = []
 
+
+# 引入单例模型
 
 class Singleton(type):
     _instances = {}
@@ -35,17 +41,62 @@ class Poker(metaclass=Singleton):
     cards_num = 54
     deck = []
 
+    current_player_index = -1
+    players = []
+
     def __init__(self):
+        Poker.reset_deck()
+
+    @staticmethod
+    def reset_deck():
+        Poker.deck.clear()
 
         for suit in range(4):
             for i in range(13):
-                self.deck.append(i + 1)
+                Poker.deck.append(i + 1)
 
-        self.deck.append(Poker.BLACK_JOKER)
-        self.deck.append(Poker.RED_JOKER)
+        Poker.deck.append(Poker.BLACK_JOKER)
+        Poker.deck.append(Poker.RED_JOKER)
+
 
     def __str__(self) -> str:
         return f"Poker: {self.cards_num} cards"
+
+
+
+    def add_player(self, player):
+        self.players.append(player)
+        player.poker = self
+
+    def shuffle_deck(self):
+        random.shuffle(Poker.deck)
+
+    def distribute(self):
+        return Poker.deck.pop()
+
+    @staticmethod
+    def distribute_all():
+        if len(Poker.players) > 0:
+            while len(Poker.deck) > 0:
+                Poker.get_next_player().draw_a_card()
+
+
+    @staticmethod
+    def get_next_player():
+        if len(Poker.players) < 1:
+            return None
+        else:
+            Poker.current_player_index = (Poker.current_player_index + 1) % len(Poker.players)
+            return Poker.players[Poker.current_player_index]
+
+
+
+    @staticmethod
+    def check_cards_if_has(who, whatcard):
+
+        for card in who:
+            if card == whatcard:
+                who.remove(whatcard)
 
     def is_sister(self, cards):
         if len(cards) < 4:
