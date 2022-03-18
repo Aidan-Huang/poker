@@ -58,6 +58,10 @@ class Poker(metaclass=Singleton):
         Poker.deck.append(Poker.BLACK_JOKER)
         Poker.deck.append(Poker.RED_JOKER)
 
+    @staticmethod
+    def reset_players():
+        Poker.current_player_index = -1
+        Poker.players.clear()
 
     def __str__(self) -> str:
         return f"Poker: {self.cards_num} cards"

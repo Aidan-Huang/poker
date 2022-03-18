@@ -5,7 +5,10 @@ from player import Player
 
 class TestPokerMethods(unittest.TestCase):
 
-    poker = Poker()
+    def setUp(self) -> None:
+        self.poker = Poker()
+        Poker.reset_deck()
+        Poker.reset_players()
 
     def test_init(self):
         self.assertEqual(54, len(self.poker.deck))
@@ -20,8 +23,6 @@ class TestPokerMethods(unittest.TestCase):
         # print(self.poker.deck)
 
     def test_get_next_player(self):
-
-        Poker.players.clear()
 
         self.assertIsNone(Poker.get_next_player())
 
@@ -39,7 +40,6 @@ class TestPokerMethods(unittest.TestCase):
 
     def test_distribute_all(self):
 
-        Poker.reset_deck()
         self.poker.shuffle_deck()
 
         aidan = Player("Aidan")
