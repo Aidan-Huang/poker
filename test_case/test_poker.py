@@ -59,9 +59,9 @@ class TestPokerMethods(unittest.TestCase):
         aidan.hand_cards.sort()
         computer.hand_cards.sort()
         eric.hand_cards.sort()
-        print(aidan.hand_cards)
-        print(computer.hand_cards)
-        print(eric.hand_cards)
+        # print(aidan.hand_cards)
+        # print(computer.hand_cards)
+        # print(eric.hand_cards)
 
 
     def test_is_sister(self):

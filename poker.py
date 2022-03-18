@@ -1,23 +1,6 @@
 from player import Player
 import random
 
-
-class single:
-    card = -1
-
-
-class double:
-    cards = [-1, -1]
-
-
-class trible:
-    cards = [-1, -1, -1]
-
-
-class sister:
-    cards = []
-
-
 # 引入单例模型
 
 class Singleton(type):

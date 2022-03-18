@@ -3,21 +3,36 @@ from poker import Poker
 from player import Player
 
 
-number = 2
-
 class TestPlayerMethods(unittest.TestCase):
-
     poker = Poker()
 
+    # 分析手牌 todo
     def test_analysize(self):
         hand_cards = [1, 1, 2, 2, 3, 3, 3, 5, 5, 6, 9, 9, 10, 10, 11, 12, 50, 100]
         hand_cards = [2, 3, 4, 4, 4, 5, 6, 6, 7, 7, 7, 8, 8, 8, 9, 10, 11, 13]
         hand_cards = [1, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 12, 12, 13, 13, 13]
 
+    def test_play_cards(self):
+        aidan = Player("Aidan")
+        self.poker.add_player(aidan)
 
+        hand_cards = [1, 1, 2, 2, 3]
+
+        aidan.hand_cards = hand_cards;
+
+        self.assertTrue(aidan.play_cards([2, 2]))
+
+        self.assertEqual([1, 1, 3], aidan.hand_cards)
+
+        self.assertFalse(aidan.play_cards([2, 2]))
+
+        self.assertEqual([1, 1, 3], aidan.hand_cards)
+
+        self.assertTrue(aidan.play_cards([3]))
+
+        self.assertEqual([1, 1], aidan.hand_cards)
 
     def test_draw_a_card(self):
-
         deck = [8, 2, 1, 3]
         Poker.deck = deck
 
@@ -37,6 +52,7 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertEqual(3, aidan.hand_cards[0])
         self.assertEqual(1, eric.hand_cards[0])
         self.assertEqual(2, aidan.hand_cards[1])
+
 
 if __name__ == '__main__':
     unittest.main()
