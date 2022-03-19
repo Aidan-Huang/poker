@@ -1,6 +1,7 @@
 import unittest
 from poker import Poker
 from player import Player
+from card_type import *
 
 
 class TestPlayerMethods(unittest.TestCase):
@@ -31,6 +32,35 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertTrue(aidan.play_cards([3]))
 
         self.assertEqual([1, 1], aidan.hand_cards)
+
+    def test_play_a_type(self):
+        aidan = Player("Aidan")
+        self.poker.add_player(aidan)
+
+        hand_cards = [1, 1, 2, 2, 3]
+
+        aidan.hand_cards = hand_cards
+
+        double1 = Double([1, 1])
+        double2 = Double([2, 2])
+        double3 = Double([3, 3])
+        single3 = Single([3])
+
+        aidan.single.append(single3)
+        aidan.double.append(double2)
+        aidan.double.append(double1)
+
+        assert aidan.play_a_type(double2) is True
+        assert aidan.play_a_type(double3) is False
+
+        assert len(aidan.hand_cards) == 3
+        assert len(aidan.double) == 1
+
+        assert aidan.play_a_type(single3) is True
+
+        assert len(aidan.hand_cards) == 2
+        assert len(aidan.single) == 0
+
 
     def test_draw_a_card(self):
         deck = [8, 2, 1, 3]

@@ -1,4 +1,5 @@
 from common import Common
+from card_type import *
 
 
 class Player:
@@ -9,7 +10,7 @@ class Player:
         self.hand_cards = []
 
         self.single = []
-        self.twin = []
+        self.double = []
         self.triplet = []
         self.bomb = []
         self.three_two = []
@@ -27,6 +28,22 @@ class Player:
                 self.hand_cards.remove(card)
 
             return True
+        return False
+
+    def play_a_type(self, card_type):
+
+        if card_type.name == CardType.CARD_TYPE_SINGLE:
+            if card_type in self.single:
+                self.play_cards(card_type.cards)
+                self.single.remove(card_type)
+                return True
+
+        elif card_type.name == CardType.CARD_TYPE_DOUBLE:
+            if card_type in self.double:
+                self.play_cards(card_type.cards)
+                self.double.remove(card_type)
+                return True
+
         return False
 
     def analyze(self):
