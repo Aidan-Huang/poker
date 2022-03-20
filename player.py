@@ -28,14 +28,14 @@ class Player:
         if card_type.name == CardType.CARD_TYPE_SINGLE:
             for card in self.hand_cards:
                 if card == card_type.value:
-                    self.play_cards(card_type.Cards())
+                    self.play_cards(card_type.cards())
                     return True
 
         elif card_type.name == CardType.CARD_TYPE_DOUBLE:
             doubles = self.find_double()
             for double in doubles:
                 if double == card_type.value:
-                    self.play_cards(card_type.Cards())
+                    self.play_cards(card_type.cards())
                     return True
 
         return False
@@ -56,38 +56,16 @@ class Player:
 
         return False
 
-    def find_single(self):
-
-        for card in self.hand_cards:
-            single = Single([card])
-            self.single.append(single)
-
-        return len(self.hand_cards)
-
     # 在排序过的手牌中找对子, 返回对子数
     # 逻辑：从第一张开始数，直到倒数第二张，如果点数和后一张不同，过一张，如果和后一张相同，找到对子，过两张
     def find_double(self):
         return Common.find_repeat(self.hand_cards, 2)
 
-    def find_triplet(self):
-
-        triples = Common.find_repeat(self.hand_cards, 3)
-
-        for card in triples:
-            triple = Triple([card, card, card])
-            self.triple.append(triple)
-
-        return len(triples)
+    def find_triple(self):
+        return Common.find_repeat(self.hand_cards, 3)
 
     def find_bomb(self):
-
-        bombs = Common.find_repeat(self.hand_cards, 4)
-
-        for card in bombs:
-            bomb = Bomb([card, card, card, card])
-            self.bomb.append(bomb)
-
-        return len(bombs)
+        return Common.find_repeat(self.hand_cards, 4)
 
     def analyze(self):
         pass

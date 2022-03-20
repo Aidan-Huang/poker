@@ -1,6 +1,7 @@
 import unittest
 from poker import Poker
 from player import Player
+from card_type import *
 
 
 class TestPokerMethods(unittest.TestCase):
@@ -80,3 +81,34 @@ class TestPokerMethods(unittest.TestCase):
         self.assertTrue(self.poker.is_sister(cards))
         cards = [8, 8, 7, 7]
         self.assertTrue(self.poker.is_sister(cards))
+
+    def test_analyze_cards_type(self):
+
+        str_cards = "QQAA"
+        assert Poker.analyze_card_type(str_cards) == InvalidCardType()
+
+        str_cards = "8"
+        assert Poker.analyze_card_type(str_cards) == Single(8)
+
+        str_cards = "55"
+        assert Poker.analyze_card_type(str_cards) == Double(5)
+
+        str_cards = "333"
+        assert Poker.analyze_card_type(str_cards) == Triple(3)
+
+        str_cards = "6666"
+        assert Poker.analyze_card_type(str_cards) == Bomb(6)
+        # assert Poker.analyze_card_type(str_cards) == [{'kind': 'bomb'}, {'length': 4}, {'level': 6}]
+
+        str_cards = "J8JJ8"
+        assert Poker.analyze_card_type(str_cards) == [{'kind': 'squad'}, {'length': 5}, {'level': 11}]
+
+        str_cards = "KKAA"
+        assert Poker.analyze_card_type(str_cards) == [{'kind': 'sister'}, {'length':4}, {'level': 14}]
+
+
+
+
+
+        str_cards = "A23456789TJQKA"
+        assert Poker.analyze_card_type(str_cards) == [{'kind': 'string'}, {'length': 14}, {'level': 14}]

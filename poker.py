@@ -1,4 +1,5 @@
 from player import Player
+from eric_poker import *
 import random
 
 # 引入单例模型
@@ -45,6 +46,10 @@ class Poker(metaclass=Singleton):
     def reset_players():
         Poker.current_player_index = -1
         Poker.players.clear()
+
+    @staticmethod
+    def analyze_card_type(str_cards):
+        return identify_your_card(str_cards)
 
     def __str__(self) -> str:
         return f"Poker: {self.cards_num} cards"

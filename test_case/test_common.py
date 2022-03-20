@@ -1,7 +1,8 @@
+import unittest
 from common import Common
 
 
-class TestCommonMethods:
+class TestCommonMethods(unittest.TestCase):
 
     def test_is_contain_sub_list(self):
         big_list = [10, 4, 3, 2]
