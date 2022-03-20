@@ -63,7 +63,6 @@ class TestPokerMethods(unittest.TestCase):
         # print(computer.hand_cards)
         # print(eric.hand_cards)
 
-
     def test_is_sister(self):
 
         # 小于4张牌
@@ -81,11 +80,3 @@ class TestPokerMethods(unittest.TestCase):
         self.assertTrue(self.poker.is_sister(cards))
         cards = [8, 8, 7, 7]
         self.assertTrue(self.poker.is_sister(cards))
-
-        # # 4
-        # cards = [7, 8, 7, 9]
-        # self.assertFalse(is_sister(cards))
-
-
-if __name__ == '__main__':
-    unittest.main()

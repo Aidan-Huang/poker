@@ -21,17 +21,14 @@ class TestPlayerMethods(unittest.TestCase):
 
         aidan.hand_cards = hand_cards;
 
-        self.assertTrue(aidan.play_cards([2, 2]))
+        assert aidan.play_cards([2, 2]) is True
+        assert aidan.hand_cards == [1, 1, 3]
 
-        self.assertEqual([1, 1, 3], aidan.hand_cards)
+        assert aidan.play_cards([2, 2]) is False
+        assert aidan.hand_cards == [1, 1, 3]
 
-        self.assertFalse(aidan.play_cards([2, 2]))
-
-        self.assertEqual([1, 1, 3], aidan.hand_cards)
-
-        self.assertTrue(aidan.play_cards([3]))
-
-        self.assertEqual([1, 1], aidan.hand_cards)
+        assert aidan.play_cards([3]) is True
+        assert aidan.hand_cards == [1, 1]
 
     def test_play_a_type(self):
         aidan = Player("Aidan")
@@ -41,25 +38,19 @@ class TestPlayerMethods(unittest.TestCase):
 
         aidan.hand_cards = hand_cards
 
-        double1 = Double([1, 1])
-        double2 = Double([2, 2])
-        double3 = Double([3, 3])
-        single3 = Single([3])
-
-        aidan.single.append(single3)
-        aidan.double.append(double2)
-        aidan.double.append(double1)
+        double1 = Double(1)
+        double2 = Double(2)
+        double3 = Double(3)
+        single3 = Single(3)
 
         assert aidan.play_a_type(double2) is True
         assert aidan.play_a_type(double3) is False
 
         assert len(aidan.hand_cards) == 3
-        assert len(aidan.double) == 1
 
         assert aidan.play_a_type(single3) is True
 
         assert len(aidan.hand_cards) == 2
-        assert len(aidan.single) == 0
 
     def test_draw_a_card(self):
         deck = [8, 2, 1, 3]
@@ -90,43 +81,26 @@ class TestPlayerMethods(unittest.TestCase):
 
         aidan.hand_cards = hand_cards
 
-        assert aidan.find_double() == 4
-        assert len(aidan.double) == 4
+        assert aidan.find_double() == [1, 2, 2, 7]
 
-    def test_has_greater_type(self):
+    def test_has_greater_cards(self):
 
         aidan = Player("Aidan")
         eric = Player("Eric")
-        aidan_hand_cards = [4, 4, 10, 10, 6]
-        aidan.hand_cards = aidan_hand_cards
-        double4 = Double([4, 4])
-        double10 = Double([10, 10])
-        single6 = Single([6])
-        aidan.double.append(double4)
-        aidan.double.append(double10)
-        aidan.single.append(single6)
 
-        eric_hand_cards = [3, 3, 5, 5, 10]
+        aidan_hand_cards = [4, 4, 6, 10, 10]
+        aidan.hand_cards = aidan_hand_cards
+
+        eric_hand_cards = [3, 3, 5, 5, 6]
         eric.hand_cards = eric_hand_cards
-        double3 = Double([3, 3])
-        double5 = Double([5, 5])
-        single10 = Single([10])
-        eric.double.append(double3)
-        eric.double.append(double5)
-        eric.single.append(single10)
 
         self.poker.add_player(aidan)
         self.poker.add_player(eric)
 
-        single7 = Single([7])
-        double7 = Double([7, 7])
+        single7 = Single(7)
+        double7 = Double(7)
 
-        assert aidan.has_greater_type(single7) is False
-        assert eric.has_greater_type(single7) is True
-        assert aidan.has_greater_type(double7) is True
-        assert eric.has_greater_type(double7) is False
-
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert aidan.has_greater_cards(single7) is True
+        assert eric.has_greater_cards(single7) is False
+        assert aidan.has_greater_cards(double7) is True
+        assert eric.has_greater_cards(double7) is False
