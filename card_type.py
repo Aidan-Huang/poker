@@ -1,13 +1,13 @@
 
-
 class CardType:
     CARD_TYPE_SINGLE = "single"
     CARD_TYPE_DOUBLE = "double"
     CARD_TYPE_TRIPLE = "triple"
-    CARD_TYPE_BOMB = "bomb"
     CARD_TYPE_ROPE = "rope"
     CARD_TYPE_SISTER = "sister"
     CARD_TYPE_TRI_SISTER = "tri_sister"
+    CARD_TYPE_BOMB = "bomb"
+    CARD_TYPE_COMBINE = "combine"
     CARD_TYPE_INVALID_TYPE = "invalid_type"
 
     # 参数：扑克牌数组
@@ -15,6 +15,7 @@ class CardType:
         self.name = "ABSTRACT_TYPE"
         self.length = 1
         self.value = card
+        self.other_value = 0
 
     def __str__(self):
         return f"{self.name}, cards:{self.cards()}"
@@ -81,11 +82,14 @@ class Rope(CardType):
         self.min_limit = 5
         self.repeat = 1
 
+    def __eq__(self, other):
+        return self.name == other.name and self.value == other.value and self.length == other.length
+
     def cards(self):
         return_cards = []
         for i in range(self.length):
             for j in range(self.repeat):
-                return_cards.append(i + self.value)
+                return_cards.append(self.value - self.length + i + 1)
         return return_cards
 
 
@@ -104,3 +108,21 @@ class TriSister(Sister):
         super().__init__(card, length)
         self.name = CardType.CARD_TYPE_TRI_SISTER
         self.repeat = 3
+
+class Combine(CardType):
+
+    def __init__(self, triple, double):
+        self.name = CardType.CARD_TYPE_COMBINE
+        self.value = triple
+        self.other_value = double
+        self.length = 5
+
+    def cards(self):
+        return_cards = []
+        for _ in range(Triple().length):
+            return_cards.append(self.value)
+
+        for _ in range(Double().length):
+            return_cards.append(self.other_value)
+
+        return return_cards

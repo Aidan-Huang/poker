@@ -200,7 +200,8 @@ def identify_your_card(ti):
         if_sister = is_sister(true_use_card)
         if_bomb = is_bomb(true_use_card)
         if if_string == True:
-            return [{"kind": "string"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
+            return Rope(true_use_card[0], len(true_use_card))
+            # return [{"kind": "string"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
         if if_onecard == True:
             return Single(true_use_card[0])
             # return [{"kind": "onecard"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
@@ -216,11 +217,14 @@ def identify_your_card(ti):
                 if i == true_use_card[0]:
                     char += 1
             if char == 2:
-                return [{"kind": "squad"}, {"length": len(true_use_card)}, {"level": true_use_card[2]}]
+                return Combine(true_use_card[2], 0)
+                # return [{"kind": "squad"}, {"length": len(true_use_card)}, {"level": true_use_card[2]}]
             if char == 3:
-                return [{"kind": "squad"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
+                return Combine(true_use_card[0], 0)
+                # return [{"kind": "squad"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
         if if_sister == True:
-            return [{"kind": "sister"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
+            return Sister(true_use_card[0], len(true_use_card)/2)
+            # return [{"kind": "sister"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
         if if_bomb == True:
             return Bomb(true_use_card[0])
             # return [{"kind": "bomb"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]

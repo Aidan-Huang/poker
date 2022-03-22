@@ -51,6 +51,10 @@ class Poker(metaclass=Singleton):
     def analyze_card_type(str_cards):
         return identify_your_card(str_cards)
 
+    @staticmethod
+    def analyze_card_type1(str_cards):
+        pass
+
     def __str__(self) -> str:
         return f"Poker: {self.cards_num} cards"
 

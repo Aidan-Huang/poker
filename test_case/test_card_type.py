@@ -26,15 +26,15 @@ class TestCardTypeMethods(unittest.TestCase):
         assert str(bomb9) == "bomb, cards:[9, 9, 9, 9]"
         # assert bomb9.is_valid() is False
 
-        rope3_5 = Rope(3, 5)
+        rope3_5 = Rope(7, 5)
         assert rope3_5.name == CardType.CARD_TYPE_ROPE
         assert str(rope3_5) == "rope, cards:[3, 4, 5, 6, 7]"
 
-        sister6_3 = Sister(6, 3)
+        sister6_3 = Sister(8, 3)
         assert sister6_3.name == CardType.CARD_TYPE_SISTER
         assert str(sister6_3) == "sister, cards:[6, 6, 7, 7, 8, 8]"
 
-        tri_sister4_2 = TriSister(4, 2)
+        tri_sister4_2 = TriSister(5, 2)
         assert tri_sister4_2.name == CardType.CARD_TYPE_TRI_SISTER
         assert str(tri_sister4_2) == "tri_sister, cards:[4, 4, 4, 5, 5, 5]"
 

@@ -97,18 +97,42 @@ class TestPokerMethods(unittest.TestCase):
         assert Poker.analyze_card_type(str_cards) == Triple(3)
 
         str_cards = "6666"
-        assert Poker.analyze_card_type(str_cards) == Bomb(6)
+        assert Poker.analyze_card_type(str_cards) == Bomb(6)    # todo 炸弹搭配单牌
         # assert Poker.analyze_card_type(str_cards) == [{'kind': 'bomb'}, {'length': 4}, {'level': 6}]
 
         str_cards = "J8JJ8"
-        assert Poker.analyze_card_type(str_cards) == [{'kind': 'squad'}, {'length': 5}, {'level': 11}]
+        assert Poker.analyze_card_type(str_cards) == Combine(11, 8)  # todo 俘虏 对子数据
+        # assert Poker.analyze_card_type(str_cards) == [{'kind': 'squad'}, {'length': 5}, {'level': 11}]
 
         str_cards = "KKAA"
-        assert Poker.analyze_card_type(str_cards) == [{'kind': 'sister'}, {'length':4}, {'level': 14}]
-
-
-
-
+        assert Poker.analyze_card_type(str_cards) == Sister(14, 2)
+        # assert Poker.analyze_card_type(str_cards) == [{'kind': 'sister'}, {'length':4}, {'level': 14}]
 
         str_cards = "A23456789TJQKA"
-        assert Poker.analyze_card_type(str_cards) == [{'kind': 'string'}, {'length': 14}, {'level': 14}]
+        assert Poker.analyze_card_type(str_cards) == Rope(14, 14)
+        # assert Poker.analyze_card_type(str_cards) == [{'kind': 'string'}, {'length': 14}, {'level': 14}]
+
+    def test_analyze_cards_type1(self):
+        cards = [1, 1, 12, 12]
+        # assert Poker.analyze_card_type(cards) == InvalidCardType()
+        #
+        # cards = [8]
+        # assert Poker.analyze_card_type(cards) == Single(8)
+        #
+        # cards = [5, 5]
+        # assert Poker.analyze_card_type(cards) == Double(5)
+        #
+        # cards = [3, 3, 3]
+        # assert Poker.analyze_card_type(cards) == Triple(3)
+        #
+        # cards = [6, 6, 6, 6]
+        # assert Poker.analyze_card_type(cards) == Bomb(6)  # todo 炸弹搭配单牌
+        #
+        # cards = [11, 11, 11, 8, 8]
+        # assert Poker.analyze_card_type(cards) == Combine(11, 8)  # todo 俘虏 对子数据
+        #
+        # cards = [13, 13, 14, 14]
+        # assert Poker.analyze_card_type(cards) == Sister(14, 2)
+        #
+        # cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        # assert Poker.analyze_card_type(cards) == Rope(14, 14)
