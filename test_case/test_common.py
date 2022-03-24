@@ -12,15 +12,26 @@ class TestCommonMethods(unittest.TestCase):
 
     def test_find_repeat(self):
 
-        numbers = [1, 1, 2, 3, 3, 4, 4, 5, 6, 7, 7]
-        assert Common.find_repeat(numbers, 2) == [1, 3, 4, 7]
-        assert Common.find_repeat(numbers, 3) == []
+        nums = [1, 1, 2, 3, 3, 4, 4, 5, 6, 7, 7]
+        assert Common.find_repeat(nums, 2) == [1, 3, 4, 7]
+        assert Common.find_repeat(nums, 3) == []
 
-        numbers = [1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 5, 6, 6, 7, 7, 7]
-        assert Common.find_repeat(numbers, 2) == [1, 3, 4, 6, 7]
-        assert Common.find_repeat(numbers, 3) == [1, 3, 4, 7]
+        nums = [1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 5, 6, 6, 7, 7, 7]
+        assert Common.find_repeat(nums, 2) == [1, 3, 4, 6, 7]
+        assert Common.find_repeat(nums, 3) == [1, 3, 4, 7]
 
-        numbers = [1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6, 7, 7, 7]
-        assert Common.find_repeat(numbers, 2) == [1, 3, 4, 4, 6, 7]
-        assert Common.find_repeat(numbers, 4) == [4]
+        nums = [1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6, 7, 7, 7]
+        assert Common.find_repeat(nums, 2) == [1, 3, 4, 4, 6, 7]
+        assert Common.find_repeat(nums, 4) == [4]
+
+    def test_remove_repeat(self):
+
+        nums = [1]
+        assert Common.remove_repeat(nums) == [1]
+
+        nums = [1, 1]
+        assert Common.remove_repeat(nums) == [1]
+
+        nums = [1, 1, 1, 2, 2]
+        assert Common.remove_repeat(nums) == [1, 2]
 

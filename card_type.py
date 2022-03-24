@@ -64,10 +64,16 @@ class Triple(CardType):
 
 class Bomb(CardType):
 
-    def __init__(self, card):
+    def __init__(self, card, other_card):
         super().__init__(card)
         self.name = CardType.CARD_TYPE_BOMB
-        self.length = 4
+        self.length = 5
+        self.other_value = other_card
+
+    def cards(self):
+        cards = super().cards()
+        cards[self.length - 1] = self.other_value
+        return cards
 
     # def is_valid(self):
     #     return self.cards()[self.length - 1] != self.value

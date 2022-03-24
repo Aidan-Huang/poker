@@ -10,21 +10,21 @@ class Common:
 
     @staticmethod
     # 在数组中寻找重复指定次数的值
-    # 参数：number 数组， times 指定次数
+    # 参数：nums 数组， times 指定次数
     # 返回：所有符合条件的值数组
-    def find_repeat(numbers, times):
+    def find_repeat(nums, times):
         result = []
         f_find = True
         index = 0
         # i 指针
-        for i in range(len(numbers) - (times - 1)):
+        for i in range(len(nums) - (times - 1)):
             if i < index:
                 continue
             else:
-                number = numbers[i]
+                number = nums[i]
                 # 往前比较 重复次数减1 次
                 for time in range(1, times):
-                    if number != numbers[i + time]:
+                    if number != nums[i + time]:
                         f_find = False
                         break
                 if f_find:
@@ -35,6 +35,20 @@ class Common:
                 index += 1
 
         return result
+
+    @staticmethod
+    def remove_repeat(nums):
+        if not nums:
+            return []
+
+        result = []
+
+        for n in nums:
+            if n not in result:
+                result.append(n)
+
+        return result
+
 
 class Test:
 

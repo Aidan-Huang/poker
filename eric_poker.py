@@ -226,7 +226,7 @@ def identify_your_card(ti):
             return Sister(true_use_card[0], len(true_use_card)/2)
             # return [{"kind": "sister"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
         if if_bomb == True:
-            return Bomb(true_use_card[0])
+            return Bomb(true_use_card[0], 0)
             # return [{"kind": "bomb"}, {"length": len(true_use_card)}, {"level": true_use_card[0]}]
         num -= 1
         if num >= 0:

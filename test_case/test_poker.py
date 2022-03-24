@@ -97,7 +97,7 @@ class TestPokerMethods(unittest.TestCase):
         assert Poker.analyze_card_type(str_cards) == Triple(3)
 
         str_cards = "6666"
-        assert Poker.analyze_card_type(str_cards) == Bomb(6)    # todo 炸弹搭配单牌
+        assert Poker.analyze_card_type(str_cards) == Bomb(6, 4)    # todo 炸弹搭配单牌
         # assert Poker.analyze_card_type(str_cards) == [{'kind': 'bomb'}, {'length': 4}, {'level': 6}]
 
         str_cards = "J8JJ8"
@@ -112,27 +112,62 @@ class TestPokerMethods(unittest.TestCase):
         assert Poker.analyze_card_type(str_cards) == Rope(14, 14)
         # assert Poker.analyze_card_type(str_cards) == [{'kind': 'string'}, {'length': 14}, {'level': 14}]
 
-    def test_analyze_cards_type1(self):
+    def test_is_continue(self):
+        cards = [13, 14]
+        assert Poker.is_continue(cards) is True
+
+    def test_analyze_cards(self):
+
+        # 一张牌判断牌型
+        cards = [8]
+        assert Poker.analyze_card(cards) == Single(8)
+        cards = [7]
+        assert Poker.analyze_card(cards) != Single(8)
+
+        # 两张牌判断牌型
+        cards = [5, 5]
+        assert Poker.analyze_card(cards) == Double(5)
+        cards = [3, 9]
+        assert Poker.analyze_card(cards) == InvalidCardType()
+
+        # 三张牌判断牌型
+        cards = [3, 3, 3]
+        assert Poker.analyze_card(cards) == Triple(3)
+        cards = [2, 3, 4]
+        assert Poker.analyze_card(cards) == InvalidCardType()
+        cards = [3, 5, 5]
+        assert Poker.analyze_card(cards) == InvalidCardType()
+
+        # 四张牌判断牌型
+        cards = [13, 13, 14, 14]
+        assert Poker.analyze_card(cards) == Sister(14, 2)
         cards = [1, 1, 12, 12]
-        # assert Poker.analyze_card_type(cards) == InvalidCardType()
-        #
-        # cards = [8]
-        # assert Poker.analyze_card_type(cards) == Single(8)
-        #
-        # cards = [5, 5]
-        # assert Poker.analyze_card_type(cards) == Double(5)
-        #
-        # cards = [3, 3, 3]
-        # assert Poker.analyze_card_type(cards) == Triple(3)
-        #
-        # cards = [6, 6, 6, 6]
-        # assert Poker.analyze_card_type(cards) == Bomb(6)  # todo 炸弹搭配单牌
-        #
-        # cards = [11, 11, 11, 8, 8]
-        # assert Poker.analyze_card_type(cards) == Combine(11, 8)  # todo 俘虏 对子数据
-        #
-        # cards = [13, 13, 14, 14]
-        # assert Poker.analyze_card_type(cards) == Sister(14, 2)
-        #
-        # cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-        # assert Poker.analyze_card_type(cards) == Rope(14, 14)
+        assert Poker.analyze_card(cards) == InvalidCardType()
+        cards = [5, 6, 7, 8]
+        assert Poker.analyze_card(cards) == InvalidCardType()
+
+        #  五张牌判断牌型
+        cards = [6, 6, 6, 6, 4]
+        assert Poker.analyze_card(cards) == Bomb(6, 4)
+
+        cards = [11, 11, 11, 8, 8]
+        assert Poker.analyze_card(cards) == Combine(11, 8)
+
+        cards = [3, 4, 5, 6, 7]
+        assert Poker.analyze_card(cards) == Rope(7, 5)
+
+        cards = [3, 4, 5, 6, 8]
+        assert Poker.analyze_card(cards) == InvalidCardType()
+
+        # 六张及以上牌型
+        cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        assert Poker.analyze_card(cards) == Rope(14, 14)
+
+        cards = [4, 4, 4, 5, 5, 5, 6, 6, 6]
+        assert Poker.analyze_card(cards) == TriSister(6, 3)
+
+        cards = [5, 5, 6, 6, 7, 7, 8, 8]
+        assert Poker.analyze_card(cards) == Sister(8, 4)
+
+        cards = [5, 5, 6, 6, 7, 7, 8, 8, 10, 10]
+        assert Poker.analyze_card(cards) == InvalidCardType()

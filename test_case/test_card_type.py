@@ -20,10 +20,10 @@ class TestCardTypeMethods(unittest.TestCase):
         assert triple7.name == CardType.CARD_TYPE_TRIPLE
         assert str(triple7) == "triple, cards:[7, 7, 7]"
 
-        bomb9 = Bomb(9)
+        bomb9 = Bomb(9, 3)
         assert bomb9.name == CardType.CARD_TYPE_BOMB
         # todo 炸弹数据结构调整
-        assert str(bomb9) == "bomb, cards:[9, 9, 9, 9]"
+        assert str(bomb9) == "bomb, cards:[9, 9, 9, 9, 3]"
         # assert bomb9.is_valid() is False
 
         rope3_5 = Rope(7, 5)
