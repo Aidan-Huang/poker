@@ -1,9 +1,13 @@
+import card_type
 from common import Common
 from card_type import *
 
 
 class Player:
+
     poker = None
+
+    NPC_NAME = "NPC"
 
     def __init__(self, name):
         self.name = name
@@ -25,20 +29,8 @@ class Player:
     # 参数：出牌的牌型
     def play_a_type(self, card_type):
 
-        if card_type.name == CardType.CARD_TYPE_SINGLE:
-            for card in self.hand_cards:
-                if card == card_type.value:
-                    self.play_cards(card_type.cards())
-                    return True
+        return self.play_cards(card_type.cards())
 
-        elif card_type.name == CardType.CARD_TYPE_DOUBLE:
-            doubles = self.find_double()
-            for double in doubles:
-                if double == card_type.value:
-                    self.play_cards(card_type.cards())
-                    return True
-
-        return False
 
     # 能否接牌
     # 参数：目前最后的牌型  todo 除单牌，对子的情况，包括炸弹

@@ -19,7 +19,7 @@ class TestPlayerMethods(unittest.TestCase):
 
         hand_cards = [1, 1, 2, 2, 3]
 
-        aidan.hand_cards = hand_cards;
+        aidan.hand_cards = hand_cards
 
         assert aidan.play_cards([2, 2]) is True
         assert aidan.hand_cards == [1, 1, 3]
@@ -29,6 +29,14 @@ class TestPlayerMethods(unittest.TestCase):
 
         assert aidan.play_cards([3]) is True
         assert aidan.hand_cards == [1, 1]
+
+        hand_cards = [4, 4, 3, 5, 7]
+        aidan.hand_cards = hand_cards
+        assert aidan.play_cards([4, 4, 3, 3]) is False
+
+        aidan.hand_cards = [1, 2, 3, 4, 5, 5, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 13, 13]
+        assert aidan.play_cards([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) is False
+
 
     def test_play_a_type(self):
         aidan = Player("Aidan")
@@ -44,13 +52,30 @@ class TestPlayerMethods(unittest.TestCase):
         single3 = Single(3)
 
         assert aidan.play_a_type(double2) is True
-        assert aidan.play_a_type(double3) is False
 
         assert len(aidan.hand_cards) == 3
 
         assert aidan.play_a_type(single3) is True
 
         assert len(aidan.hand_cards) == 2
+
+        hand_cards = [3, 3, 3, 4, 4]
+        aidan.hand_cards = hand_cards
+
+        triple3 = Triple(3)
+        assert aidan.play_a_type(triple3) is True
+
+        hand_cards = [3, 3, 3, 3, 4]
+        aidan.hand_cards = hand_cards
+        boom = Bomb(3, 4)
+        assert aidan.play_a_type(boom) is True
+        assert len(hand_cards) == 0
+
+        aidan.hand_cards = [1, 2, 3, 4, 5, 5, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 13, 13]
+        sister13_13 = Sister(13, 13)
+        assert aidan.play_a_type(sister13_13) is False
+
+
 
     def test_draw_a_card(self):
         deck = [8, 2, 1, 3]

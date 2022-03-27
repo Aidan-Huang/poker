@@ -48,6 +48,13 @@ class Poker(metaclass=Singleton):
         Poker.current_player_index = -1
         Poker.players.clear()
 
+    def get_winner(self):
+        for player in self.players:
+            if len(player.hand_cards) == 0:
+                return player
+
+        return None
+
     @staticmethod
     def analyze_card_type(str_cards):
         return identify_your_card(str_cards)
@@ -55,6 +62,7 @@ class Poker(metaclass=Singleton):
     @staticmethod
     # 是否连续
     def is_continue(cards):
+        cards.sort()
         for i in range(len(cards) - 1):
             if cards[i + 1] != cards[i] + 1:
                 return False
@@ -139,20 +147,15 @@ class Poker(metaclass=Singleton):
 
         # 六张及以上牌型， 判断是否是绳子，姐妹或三姐妹
         else:
-            if n % 3 == 0:
-                if len(triple_card) == n / 3:
-                    triple_card.sort()
-                    if Poker.is_continue(triple_card):
-                        return TriSister(triple_card[-1], n / 3)
+            if n % 3 == 0 and len(triple_card) == n / 3:
+                if Poker.is_continue(triple_card):
+                    return TriSister(triple_card[-1], n / 3)
 
-            elif n % 2 == 0:
-                if len(double_card) == n / 2:
-                    double_card.sort()
-                    if Poker.is_continue(double_card):
-                        return Sister(double_card[-1], n /2)
+            elif n % 2 == 0 and len(double_card) == n / 2:
+                if Poker.is_continue(double_card):
+                    return Sister(double_card[-1], n /2)
 
             return InvalidCardType()
-
 
     def __str__(self) -> str:
         return f"Poker: {self.cards_num} cards"
@@ -175,6 +178,12 @@ class Poker(metaclass=Singleton):
             while len(Poker.deck) > 0:
                 Poker.get_next_player().draw_a_card()
 
+    @staticmethod
+    # todo 先出牌策略目前就是加入的第一个玩家
+    def get_first_player():
+        if len(Poker.players) < 1:
+            return None
+        return Poker.get_next_human()
 
     @staticmethod
     def get_next_player():
@@ -184,7 +193,15 @@ class Poker(metaclass=Singleton):
             Poker.current_player_index = (Poker.current_player_index + 1) % len(Poker.players)
             return Poker.players[Poker.current_player_index]
 
+    @staticmethod
+    def get_next_human():
 
+        for i in range(len(Poker.players)):
+            player = Poker.get_next_player()
+            if player.name != Player.NPC_NAME:
+                return player
+
+        return None
 
     @staticmethod
     def check_cards_if_has(who, whatcard):

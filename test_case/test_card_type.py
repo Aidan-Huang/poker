@@ -22,20 +22,24 @@ class TestCardTypeMethods(unittest.TestCase):
 
         bomb9 = Bomb(9, 3)
         assert bomb9.name == CardType.CARD_TYPE_BOMB
-        # todo 炸弹数据结构调整
         assert str(bomb9) == "bomb, cards:[9, 9, 9, 9, 3]"
-        # assert bomb9.is_valid() is False
 
-        rope3_5 = Rope(7, 5)
-        assert rope3_5.name == CardType.CARD_TYPE_ROPE
-        assert str(rope3_5) == "rope, cards:[3, 4, 5, 6, 7]"
+        rope7_5 = Rope(7, 5)
+        assert rope7_5.name == CardType.CARD_TYPE_ROPE
+        assert str(rope7_5) == "rope, cards:[3, 4, 5, 6, 7]"
 
-        sister6_3 = Sister(8, 3)
-        assert sister6_3.name == CardType.CARD_TYPE_SISTER
-        assert str(sister6_3) == "sister, cards:[6, 6, 7, 7, 8, 8]"
+        sister8_3 = Sister(8, 3)
+        assert sister8_3.name == CardType.CARD_TYPE_SISTER
+        assert str(sister8_3) == "sister, cards:[6, 6, 7, 7, 8, 8]"
 
-        tri_sister4_2 = TriSister(5, 2)
-        assert tri_sister4_2.name == CardType.CARD_TYPE_TRI_SISTER
-        assert str(tri_sister4_2) == "tri_sister, cards:[4, 4, 4, 5, 5, 5]"
+        tri_sister5_2 = TriSister(5, 2)
+        assert tri_sister5_2.name == CardType.CARD_TYPE_TRI_SISTER
+        assert str(tri_sister5_2) == "tri_sister, cards:[4, 4, 4, 5, 5, 5]"
+
+        combine5_7 = Combine(5, 7)
+        assert combine5_7.name == CardType.CARD_TYPE_COMBINE
+        assert str(combine5_7) == "combine, cards:[5, 5, 5, 7, 7]"
+
+
 
 

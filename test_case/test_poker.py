@@ -39,12 +39,31 @@ class TestPokerMethods(unittest.TestCase):
         # 重复轮
         self.assertEqual(aidan.name, self.poker.get_next_player().name)
 
+    def test_get_next_human(self):
+
+        self.assertIsNone(Poker.get_next_player())
+
+        aidan = Player("Aidan")
+        npc1 = Player(Player.NPC_NAME)
+        eric = Player("Eric")
+
+        self.poker.add_player(aidan)
+        self.poker.add_player(npc1)
+        self.poker.add_player(eric)
+
+        # 依次轮
+        assert self.poker.get_next_human().name == aidan.name
+        assert self.poker.get_next_human().name == eric.name
+
+        # 重复轮
+        assert self.poker.get_next_human().name == aidan.name
+
     def test_distribute_all(self):
 
         self.poker.shuffle_deck()
 
         aidan = Player("Aidan")
-        computer = Player("computer")
+        computer = Player(Player.NPC_NAME)
         eric = Player("Eric")
 
         self.poker.add_player(aidan)
@@ -171,3 +190,6 @@ class TestPokerMethods(unittest.TestCase):
 
         cards = [5, 5, 6, 6, 7, 7, 8, 8, 10, 10]
         assert Poker.analyze_card(cards) == InvalidCardType()
+
+        cards = [6, 6, 7, 7, 8, 8]
+        assert Poker.analyze_card(cards) == Sister(8, 3)

@@ -3,10 +3,15 @@ class Common:
     @staticmethod
     # 判断数组是否包含另一个数组
     def is_contain_sub_list(origin_list, sub_list):
-        if all(x in origin_list for x in sub_list):
-            return True
-
-        return False
+        # if all(x in origin_list for x in sub_list):
+        #     return True
+        test_list = origin_list.copy()
+        for element in sub_list:
+            if element in test_list:
+                test_list.remove(element)
+            else:
+                return False
+        return True
 
     @staticmethod
     # 在数组中寻找重复指定次数的值

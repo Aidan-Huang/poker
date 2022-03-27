@@ -23,6 +23,9 @@ class CardType:
     def __eq__(self, other):
         return self.name == other.name and self.value == other.value
 
+    def __gt__(self, other):
+        return self.name == other.name and self.value > other.value
+
     def cards(self):
         return_cards = []
         for _ in range(self.length):
@@ -70,6 +73,11 @@ class Bomb(CardType):
         self.length = 5
         self.other_value = other_card
 
+    def __gt__(self, other):
+        if self.name == other.name:
+            return self.value > other.value
+        return True
+
     def cards(self):
         cards = super().cards()
         cards[self.length - 1] = self.other_value
@@ -115,6 +123,7 @@ class TriSister(Sister):
         self.name = CardType.CARD_TYPE_TRI_SISTER
         self.repeat = 3
 
+
 class Combine(CardType):
 
     def __init__(self, triple, double):
@@ -125,10 +134,10 @@ class Combine(CardType):
 
     def cards(self):
         return_cards = []
-        for _ in range(Triple().length):
+        for _ in range(3):
             return_cards.append(self.value)
 
-        for _ in range(Double().length):
+        for _ in range(2):
             return_cards.append(self.other_value)
 
         return return_cards
